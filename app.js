@@ -1,12 +1,15 @@
 const express = require("express");
-
 const logger = require("morgan");
-
 const cors = require("cors");
 
 require("dotenv").config();
 
 const { brokersRouter } = require("./src/routes/");
+
+process.on("uncaughtException", function (err) {
+  console.log("An error occurred: ", err);
+  console.log(err.stack);
+});
 
 const app = express();
 
@@ -16,7 +19,7 @@ app.use(logger(formatsLogger));
 
 app.use(cors());
 
-app.use(express.json);
+app.use(express.json());
 
 // app.use(express.static("public"));
 

@@ -1,6 +1,8 @@
 const { Broker } = require("../../models");
 
-const getAll = async (_, res) => {
+const { ctrlWrapper } = require("../../helpers");
+
+const getAll = ctrlWrapper(async (_, res) => {
   const result = await Broker.find();
 
   res.status(200).json({
@@ -8,6 +10,6 @@ const getAll = async (_, res) => {
     code: 200,
     data: { brokers: result },
   });
-};
+});
 
 module.exports = getAll;
