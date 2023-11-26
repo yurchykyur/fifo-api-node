@@ -6,6 +6,8 @@ const cors = require("cors");
 
 require("dotenv").config();
 
+const { brokersRouter } = require("./src/routes/");
+
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -16,17 +18,15 @@ app.use(cors());
 
 app.use(express.json);
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
-app.use("/api", (_, res) => {
-  res.status(200).json({ message: "Not found" });
-});
+app.use("/brokers", brokersRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Not found" });
 });
 
-app.use((err, _, res, next) => {
+app.use((err, req, res, next) => {
   const { status: statusError = 500, error = { message: "Server error" } } =
     err;
 
